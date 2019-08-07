@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<head>    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.5.1/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.5.1/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://rawcdn.githack.com/python-visualization/folium/master/folium/templates/leaflet.awesome.rotate.css"/>
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_a0677ed16fab4691895af18f211d171e {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+            </style>
+        
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-dvf/0.3.0/leaflet-dvf.markers.min.js"></script>
+</head>
+<body>    
+    
+            <div class="folium-map" id="map_a0677ed16fab4691895af18f211d171e" ></div>
+        
+</body>
+<script>    
+    
+            var map_a0677ed16fab4691895af18f211d171e = L.map(
+                "map_a0677ed16fab4691895af18f211d171e",
+                {
+                    center: [41.25716, -95.995102],
+                    crs: L.CRS.EPSG3857,
+                    zoom: 10,
+                    zoomControl: true,
+                    preferCanvas: false,
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_5ae6abc00b3b4042a9199145b7e5a422 = L.tileLayer(
+                "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {"attribution": "Data by \u0026copy; \u003ca href=\"http://openstreetmap.org\"\u003eOpenStreetMap\u003c/a\u003e, under \u003ca href=\"http://www.openstreetmap.org/copyright\"\u003eODbL\u003c/a\u003e.", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            ).addTo(map_a0677ed16fab4691895af18f211d171e);
+        
+    
+            var marker_1afbbeb8545240e091754c538bfe8f5e = L.marker(
+                [41.48269787284335, -96.18638361225514],
+                {}
+            ).addTo(map_a0677ed16fab4691895af18f211d171e);
+        
+    
+            var icon_3b703c5b39dd4f4a8757a0591a77048d = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "green", "prefix": "glyphicon"}
+            );
+            marker_1afbbeb8545240e091754c538bfe8f5e.setIcon(icon_3b703c5b39dd4f4a8757a0591a77048d);
+        
+    
+            var marker_988b3cfcaba24b9ea13a9555c8d07421 = L.marker(
+                [41.079969863444006, -95.91735006230884],
+                {}
+            ).addTo(map_a0677ed16fab4691895af18f211d171e);
+        
+    
+            var icon_16412993819e45ebaab8928dc101446b = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "info-sign", "iconColor": "white", "markerColor": "red", "prefix": "glyphicon"}
+            );
+            marker_988b3cfcaba24b9ea13a9555c8d07421.setIcon(icon_16412993819e45ebaab8928dc101446b);
+        
+    
+            var poly_line_d539e20c72bf4abaaba422ee5e112c8c = L.polyline(
+                [[41.48269787284335, -96.18638361225514], [41.079969863444006, -95.91735006230884]],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 3}
+            ).addTo(map_a0677ed16fab4691895af18f211d171e);
+        
+    
+            var regular_polygon_marker_73baec12ef664a429eede3ec6141fb62 = new L.RegularPolygonMarker(
+                [41.38201587049352, -96.11912522476857],
+                {"bubblingMouseEvents": true, "color": "#3388ff", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "numberOfSides": 3, "opacity": 1.0, "radius": 6, "rotation": 63.25409763528597, "stroke": true, "weight": 3}
+            ).addTo(map_a0677ed16fab4691895af18f211d171e);
+        
+    
+            var regular_polygon_marker_53a2eb158f8b4bab9ba77f496c5acf07 = new L.RegularPolygonMarker(
+                [41.281333868143676, -96.05186683728199],
+                {"bubblingMouseEvents": true, "color": "#3388ff", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "numberOfSides": 3, "opacity": 1.0, "radius": 6, "rotation": 63.25409763528597, "stroke": true, "weight": 3}
+            ).addTo(map_a0677ed16fab4691895af18f211d171e);
+        
+    
+            var regular_polygon_marker_6d1d88617e1b4998b3babcfae165ef36 = new L.RegularPolygonMarker(
+                [41.18065186579384, -95.98460844979542],
+                {"bubblingMouseEvents": true, "color": "#3388ff", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "numberOfSides": 3, "opacity": 1.0, "radius": 6, "rotation": 63.25409763528597, "stroke": true, "weight": 3}
+            ).addTo(map_a0677ed16fab4691895af18f211d171e);
+        
+</script>
