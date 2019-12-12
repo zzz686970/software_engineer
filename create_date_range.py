@@ -14,6 +14,8 @@ data_range = [base - timedelta[seconds=(x*60 + randint(-30, 30))] for x in range
 
 datelist = pd.date_range(end = pd.datetime.today(), periods = 100).tolist()
 # datelist = pd.date_range(pd.datetime.today(), periods = 100).to_pydatetime().tolist()
+## change date_range format
+# datelist.format(formatter=lambda x: x.strftime('%Y%m%d'))
 
 def date_generator():
 	start_date = datetime.today()
