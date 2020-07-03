@@ -31,4 +31,13 @@ Iaas
 > Infrastructure as a service, computer nodes/vietual machine, need to maintain for your application to work.
 > Eg. website: frontend, backend, load balancer and auto scaling 
 
+## Compute Engine
+create instances (virtual machines).
 
+- region are locations, zones are actual data centers inside regions, same zones may not be in the same geographical locations, so better deploy them in the same session.
+- memory and drive capacity
+> SSD performs better in terms of read/write speed, lots of data --> standard disk
+- preemptible instance
+> you can create and run at a much lower price than normal instances, self terminate after 24 hours, compute engine might terminate preemptible instance at any time due to other people's workload on GCP.
+> solution: mix with permanent instance, if job is not finished on preemptible instance, migrate to the permanent instance to continue running.
+> snapshots 
