@@ -54,4 +54,36 @@ Difference between an image and a snapshot.
 > image don't have data stored on the disk while a snapshot has.
 
 ## IAM
+Identity Access Management 
+- roles and permissions 
+> google account  
+> service account   
+> google group  
+
+roles are made up of a list of permissions, can use predifiend roles or even customize roles.
+
+- primitive roles
+> owner  
+> editor  
+> viewer  
+
+summary  
+- every resource must belong to a project and a project must have a billing account attached to it.  
+- remember hierarchy inheritance of access.
+- spending limits can be set for a day, billing is done monthly.
+- in terms of across projects, chargs is done on the one who initiates the process. 
+
+## Storage 
+- OLTP and OLAP
+> OLTP db has strong consistency, allow high throughput of reads and writes.  
+> OLAP db is for historical querying, classified as data warehouses, doesn't support high throughput in terms of read and write. 
+- strongly consistent and eventually consistent
+> strong consistency, write transaction is successful, db guarantees the next read of data is available including the latest write.   
+> eventual consistency, after "a period of time", not immediately. 
+- transactional database
+> strong consistency and used for OLTP purposes.  
+
+### cloud storage
+![cloud storage](gcp_image/storage_options.png?raw=true "Title")
+- blobs (files or images)
 
