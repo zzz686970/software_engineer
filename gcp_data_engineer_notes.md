@@ -52,7 +52,12 @@ create instances (virtual machines).
 > SSD performs better in terms of read/write speed, lots of data --> standard disk  
 - Preemptive instance
 > used when you are processing bach workloads which allows for preemption
-> you can create and run at a much lower price than normal instances, self terminate after 24 hours, compute engine might terminate preemptive instance at any time due to other people's workload on GCP.  
+> you can create and run at a much lower price than normal instances, self terminate after 24 hours, compute engine might terminate preemptive instance at any time due to 
+
+- encrypt at rest (data in chunked and encrypted with its own key, distributed in storage infrastructure)
+- live migrate 
+
+other people's workload on GCP.  
 > solution: mix with permanent instance, if job is not finished on preemptive instance, migrate to the permanent instance to continue running.  
 - snapshots 
 > used for backup or transfer of data 
@@ -61,7 +66,53 @@ create instances (virtual machines).
 
 QA.  
 Difference between an image and a snapshot.  
-> image don't have data stored on the disk while a snapshot has.
+> image don't have data stored on the disk while a snapshot has.  
+> snapshots are differential. (snapshot 2 only contains blocks which is different from snapshot 1)
+
+Best practice:
+- use start up scripts. (stopping vm will change ip!).
+- backup data to gcs 
+- diversify and use load balancer 
+- use zone and region 
+
+### migrage a disk to different region
+```sh
+## create a disk in different region but same zone.
+### attach to an instance
+## list all disks
+lsblk
+
+## format disk which is about to be mounted 
+mkfs.ext4 -m 0 -F -E lazy_itable_init=0,lazy_journal_init=0,discard /dev/sdb
+
+mkdir -p /mnt/httpdir 
+mount -o discard,defaults /dev/sdb /mnt/httpdir 
+chmod a+w /mnt/httpdir
+cp /etc/fstab /etc/fstab.backup
+
+blkid /dev/sdb
+
+vim /etc/fstab 
+UUID=xxx /mnt/httpdir ext4 discard,defaults,nofail 0 2
+
+cp /var/www/html/index.php /mnt/httpdir/.
+vim /etc/apache2/sites-enabled/000-default.conf 
+DocumentRoot /mnt/httpdir 
+
+vim /etc/apache2/apache2.conf 
+<Directory /mnt/httpdir> ...
+
+## reload
+/etc/init.d/apache2 reload 
+```
+
+create a disk from a snapshot. 
+
+Question, how to do live migrate:
+1. create an image based on boot-image disk 
+2. create a snapshot from the disk where actual files are stored 
+3. create a disk from the snapshot to a different region. 
+4. clone the vm, choose the custom image created (same configuration rule) and the new disk (create from snapshot) 
 
 ## 3.IAM
 Identity Access Management 
@@ -77,6 +128,11 @@ roles are made up of a list of permissions, can use predifiend roles or even cus
 > owner  
 > editor  
 > viewer  
+
+To create a vm instance, if you want to mange default service acccount, then have to grant iam.serviceAccountActor role. 
+To create a fireware rule, need to grant compute.network.updatePolicy, compute.firewalls.create and compute.networks.network
+> can be able to create fireware rule in shell console.  
+> gcloud compute firewall-rules create testrule --allow tcp:8989
 
 summary  
 - every resource must belong to a project and a project must have a billing account attached to it.  
@@ -552,7 +608,8 @@ data compliance: EU GDPR(general data protection regulation), google will do the
 
 ### debugger
 inspect state of a running application in real time without stopping or slowing it down.  
-it allow you to inspect the production source code without slowing down your application. 
+it allow you to inspect the production source code without slowing down your application.  
+monitor variable in running programs.  
 ### error reporting 
 counts, analyzes and aggregates the crashes in cloud services.  
 email, mobile alerts on new erros. 
@@ -577,12 +634,24 @@ can also analyse this in **real-time**.
 - run code in response to an event. 
 - short process 
 
+```sh
+def hello_gcs(evemt, context):
+	file = event 
+	print(f"process file: {file['name']}")
+
+## zip python code 
+gcloud functions deploy hello_gcs --runtime=python37 --trigger-resource=ace-exam-prep-bucket-1 --trigger-event=google.storage.object.finalize --source=gs://ace-exam-prep-bucket-1/main.zip
+```
+
 ## 19.App Engine
 - app and container that need to run for extended periods of time 
 - conform to specific runtime 
 - PAAS 
 ## Kubernetes Engine
 - hybird compute
+
+What are the components of an App Engine Standard application?
+> Application, Service, Version and Instance
 
 
 ## 20.GKE 
@@ -646,4 +715,15 @@ kubectl get deployment hello-web
 
 ```
 
+## 21. Network
+TCP before BBR, TCP sends data at lower bandwidth because the 1980s-era algorithm assumes that packet loss means network congestion.  
+BBR models the network to send as fast as the available bandwidth and is 2700x faster than previous TCPs on a 10Gb, 100ms link with 1% loss. 
+
+hight network throughput and shorter network queues (reducing round-trip time), faster responses and lower delays for latency-sensitive applications. 
+> from gcp services to cloud users  
+> from google cloud to internet users  
+
+![network](gcp_image/network.png?raw=true "Title")
+
+Each side of a peering association is set up independently. Note that peering will only be active when the configuration from both sides matches. Either side can choose to delete the peering association at any time to tear that peer.
 
