@@ -10,6 +10,12 @@ Why use a cloud solution:
 > easier to setup, shorted setup time, no capitial cost, pay as go  
 > Notice some sensitive or critical data can not be stored in the cloud.  
 
+What will change to a traditional company?
+
+- Capacity planning
+- TCO calculations, using service instead of leasing/buying servers
+- OpEx/CapEx allocation is adjusted as services are consumed vs using capital expenditures.
+
 Why GCP?
 - Performance 
 
@@ -200,6 +206,19 @@ cbt deletetable table_name
 
 ```
 
+Schema design for row keys
+```
+distributed load
+- reverse domain names
+- string identifiers
+- time stamps (reverse, not at front / or only identifier)
+
+hotspotting
+- domain name 
+- sequential id
+- timestamp alone
+```
+
 ### bigquery 
 - data warehousing solution
 - automatically backed up and replicated and massively scalable to petabytes of data 
@@ -207,12 +226,29 @@ cbt deletetable table_name
 - not a transaction database and should not be used for application that require high throughput of read and write 
 - cheap to store data however it can be costly when processing the data.  
 
+bigquery vs bigtable
+- bigtable is optimized for read-write latency and analytics throughput, bigquery is optimized for analytics querying and reporting
+- bigtable is optimized for narrow-range and bigquery is fast for wide-range queries
+
 ### cloudsql 
 - not a manged service, so it is not automatically replicated, auto-scaled and hightly available 
 - create a cloudsql instance, similart like a vm  in compute engine 
 - relational db like mysql, postgres 
 - OLTP db, has strong consistency and used for transactional db. 
 - good solution for migrating sql servers to GCP (note sql server is supported in GCP as well.)
+
+what is manged in cloudsql
+- os installation/management
+- database installation/management
+- scaling disk space
+- availability (failover, read replicas)
+- monitoring 
+- authorize network connections/proxy/use SSL 
+
+limited global availability, read replicas limited to same region.
+max disk size of 10 TB, use spanner if size is larger.
+
+number of concurrent connections is limited 
 
 ### datastore
 - highly scalable nosql db, like mongoDB and aws dynamoDB 
@@ -225,6 +261,22 @@ cbt deletetable table_name
 >  indexes for simple queries are created automatically (querying over a single property)
 >  complex queries must be defined in a configuration file called index.yaml 
 >  datastore indexes create to update index, compare local index.yaml with production one. (Important)
+
+datastore vs firestore
+
+> datastore is fully managed NoSQL data storage, managed, nosql, schemaless database for non-relational data.
+> schemaless access, sql-like querying, managed database, autoscale with users.
+
+> firestore nosql document/collection database to store, sync and query data for mobile and web apps at global scale
+> mobile SDKs with offline data access, real time synchronization
+
+cloud storage for firebase
+> can use firebase sdk for file uploads
+- robust operations (restart where you stop)
+- strong security (firebase authentication)
+- high scalability (exabyte scale )
+
+
 
 ### cloud spanner 
 > relational db that is horizontally scalable. 
@@ -376,6 +428,10 @@ Pub/Sub guarantees the subscriber will receive the message at least once before 
 - scale if required.  
 - easily migrate existing hadoop workloads onto GCP. 
 
+dataproc is optimized for ephemeral, job-scoped clusters
+
+dataproc can support custom spark transformation.
+
 ### spark 
 - in-memory distributed data processing engine. 
 - spark workloads exist on a hadoop cluster. 
@@ -396,7 +452,9 @@ gcloud dataflow jobs describe job_id
 - parallel data processing. 
 
 Why not use bigquery streaming insert instead?  
-Data process is needed. 
+- Data process is needed. 
+- There is streaming project quota
+
 > format, transfrom  
 
 note streaming transformations: Apache Nifi and Storm  
@@ -612,10 +670,13 @@ it allow you to inspect the production source code without slowing down your app
 monitor variable in running programs.  
 ### error reporting 
 counts, analyzes and aggregates the crashes in cloud services.  
-email, mobile alerts on new erros. 
+email, mobile alerts on new errors. 
 ### monitoring 
 overview performance, uptime and health, collects metrics, events and metadata, displays them via a dashboard.  
 monitor updates of gcp services.  
+- instance performance metrics (disk I/O, CPU usage, network connections)
+- no application performance metrics
+
 ### alerting  
 create policy to notify.
 ### tracing  
@@ -625,9 +686,16 @@ auto analyses to generate latency reports to show performace degradations on vms
 store, search, analyse, monitor and alert on log data and events from GCP.  
 scale and ingest from thousands of VMs.  
 can also analyse this in **real-time**.  
+- audit logs (who created this instance?)
+- does not include application logs
 
 - export logs to bigquery 
 > create an export sink, automatically send filtered logs to bq.  
+
+What if we want application data?
+- stackdriver agents. (install and configure for the instance)
+- logging agent = stackdriver logging = application logs (configured with Fluentd)
+- monitoring agent = stackdriver monitoring = application performance/metrics/alerts (reqiure plugin configuration)
 
 ## 18.Cloud functions
 - run code in an envrionment taht does not require setting up vms or kubernetes clusters. 
